@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmAssist - Your Digital Farming Companion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>FarmAssist</h1>
+            </div>
+            <nav class="nav">
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#weather" class="nav-link">Weather</a>
+                <a href="#recommendations" class="nav-link">Recommendations</a>
+                <a href="#policies" class="nav-link">Policies</a>
+                <a href="#market" class="nav-link">Market</a>
+            </nav>
+            <div class="language-selector">
+                <select id="language">
+                    <option value="en">English</option>
+                    <option value="hi">हिंदी</option>
+                    <option value="ta">தமிழ்</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="welcome-card">
+                    <h2>Welcome to FarmAssist</h2>
+                    <p>Your comprehensive digital farming companion</p>
+                    <div class="quick-stats">
+                        <div class="stat">
+                            <i class="fas fa-thermometer-half"></i>
+                            <span id="current-temp">--°C</span>
+                            <label>Temperature</label>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-tint"></i>
+                            <span id="humidity">--%</span>
+                            <label>Humidity</label>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span id="season">--</span>
+                            <label>Season</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <div class="action-card" onclick="showSection('weather')">
+                        <i class="fas fa-cloud-sun"></i>
+                        <h3>Weather Updates</h3>
+                        <p>Get real-time weather forecasts</p>
+                    </div>
+                    <div class="action-card" onclick="showSection('recommendations')">
+                        <i class="fas fa-leaf"></i>
+                        <h3>Crop Recommendations</h3>
+                        <p>Find best seeds and soil tips</p>
+                    </div>
+                    <div class="action-card" onclick="showSection('policies')">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Government Policies</h3>
+                        <p>Latest schemes and subsidies</p>
+                    </div>
+                    <div class="action-card" onclick="showSection('market')">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Market Prices</h3>
+                        <p>Current crop prices and trends</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Weather Section -->
+            <section id="weather" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cloud-sun"></i> Weather Information</h2>
+                    <input type="text" id="location-input" placeholder="Enter your location">
+                    <button onclick="getWeather()">Get Weather</button>
+                </div>
+
+                <div class="weather-grid">
+                    <div class="weather-card current">
+                        <h3>Current Weather</h3>
+                        <div class="weather-icon">
+                            <i class="fas fa-sun" id="weather-icon"></i>
+                        </div>
+                        <div class="weather-info">
+                            <span class="temp" id="weather-temp">25°C</span>
+                            <span class="condition" id="weather-condition">Sunny</span>
+                            <div class="details">
+                                <span><i class="fas fa-eye"></i> Visibility: <span id="visibility">10km</span></span>
+                                <span><i class="fas fa-wind"></i> Wind: <span id="wind">12 km/h</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="weather-card forecast">
+                        <h3>7-Day Forecast</h3>
+                        <div class="forecast-list" id="forecast-list">
+                            <!-- Forecast items will be generated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="weather-card alerts">
+                        <h3>Weather Alerts</h3>
+                        <div class="alert-list" id="alert-list">
+                            <div class="alert warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Heavy rain expected tomorrow</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommendations Section -->
+            <section id="recommendations" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-leaf"></i> Crop & Soil Recommendations</h2>
+                </div>
+
+                <div class="recommendation-filters">
+                    <select id="soil-type">
+                        <option value="">Select Soil Type</option>
+                        <option value="clay">Clay Soil</option>
+                        <option value="sandy">Sandy Soil</option>
+                        <option value="loamy">Loamy Soil</option>
+                        <option value="silt">Silt Soil</option>
+                    </select>
+                    <select id="season-filter">
+                        <option value="">Select Season</option>
+                        <option value="kharif">Kharif (Monsoon)</option>
+                        <option value="rabi">Rabi (Winter)</option>
+                        <option value="summer">Summer</option>
+                    </select>
+                    <button onclick="getRecommendations()">Get Recommendations</button>
+                </div>
+
+                <div class="recommendations-grid">
+                    <div class="recommendation-card">
+                        <h3>Seed Recommendations</h3>
+                        <div id="seed-recommendations">
+                            <div class="recommendation-item">
+                                <i class="fas fa-seedling"></i>
+                                <div>
+                                    <h4>Rice (Basmati)</h4>
+                                    <p>Best for clay soil during monsoon season</p>
+                                    <span class="price">₹45-50 per kg</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <h3>Soil Management</h3>
+                        <div id="soil-recommendations">
+                            <div class="recommendation-item">
+                                <i class="fas fa-flask"></i>
+                                <div>
+                                    <h4>Organic Compost</h4>
+                                    <p>Improve soil fertility naturally</p>
+                                    <span class="benefit">Increases yield by 15-20%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation-card">
+                        <h3>Fertilizer Guide</h3>
+                        <div id="fertilizer-recommendations">
+                            <div class="recommendation-item">
+                                <i class="fas fa-vial"></i>
+                                <div>
+                                    <h4>NPK 10-26-26</h4>
+                                    <p>Best for root development</p>
+                                    <span class="dosage">Apply 2 bags per acre</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Government Policies Section -->
+            <section id="policies" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-alt"></i> Government Schemes & Policies</h2>
+                </div>
+
+                <div class="policies-grid">
+                    <div class="policy-card">
+                        <div class="policy-header">
+                            <h3>PM-KISAN Scheme</h3>
+                            <span class="policy-status active">Active</span>
+                        </div>
+                        <p>Direct income support to farmers - ₹6,000 per year</p>
+                        <div class="policy-details">
+                            <span><i class="fas fa-calendar"></i> Deadline: Ongoing</span>
+                            <span><i class="fas fa-money-bill"></i> Amount: ₹2,000 per installment</span>
+                        </div>
+                        <button class="apply-btn">Apply Now</button>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-header">
+                            <h3>Soil Health Card</h3>
+                            <span class="policy-status active">Active</span>
+                        </div>
+                        <p>Free soil testing and nutrient recommendations</p>
+                        <div class="policy-details">
+                            <span><i class="fas fa-calendar"></i> Deadline: Ongoing</span>
+                            <span><i class="fas fa-flask"></i> Service: Free soil testing</span>
+                        </div>
+                        <button class="apply-btn">Apply Now</button>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-header">
+                            <h3>Kisan Credit Card</h3>
+                            <span class="policy-status active">Active</span>
+                        </div>
+                        <p>Easy access to credit for agricultural needs</p>
+                        <div class="policy-details">
+                            <span><i class="fas fa-percent"></i> Interest: 4% per annum</span>
+                            <span><i class="fas fa-credit-card"></i> Limit: Up to ₹3 lakh</span>
+                        </div>
+                        <button class="apply-btn">Apply Now</button>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-header">
+                            <h3>Pradhan Mantri Fasal Bima Yojana</h3>
+                            <span class="policy-status active">Active</span>
+                        </div>
+                        <p>Comprehensive crop insurance scheme</p>
+                        <div class="policy-details">
+                            <span><i class="fas fa-shield-alt"></i> Coverage: Up to 100%</span>
+                            <span><i class="fas fa-percent"></i> Premium: 1.5-5% of sum insured</span>
+                        </div>
+                        <button class="apply-btn">Apply Now</button>
+                    </div>
+                </div>
+
+                <div class="news-updates">
+                    <h3>Latest Agricultural News</h3>
+                    <div class="news-list">
+                        <div class="news-item">
+                            <span class="news-date">Today</span>
+                            <h4>New MSP rates announced for Rabi crops</h4>
+                            <p>Government increases minimum support prices for wheat and barley</p>
+                        </div>
+                        <div class="news-item">
+                            <span class="news-date">Yesterday</span>
+                            <h4>Subsidy on organic fertilizers increased</h4>
+                            <p>50% subsidy now available on organic farming inputs</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Market Section -->
+            <section id="market" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Market Prices</h2>
+                    <select id="market-location">
+                        <option value="delhi">Delhi</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="bangalore">Bangalore</option>
+                        <option value="kolkata">Kolkata</option>
+                    </select>
+                </div>
+
+                <div class="market-grid">
+                    <div class="market-card">
+                        <h3>Today's Prices</h3>
+                        <div class="price-list" id="price-list">
+                            <div class="price-item">
+                                <span class="crop">Rice</span>
+                                <span class="price">₹2,150/quintal</span>
+                                <span class="change positive">+2.5%</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="crop">Wheat</span>
+                                <span class="price">₹2,015/quintal</span>
+                                <span class="change negative">-1.2%</span>
+                            </div>
+                            <div class="price-item">
+                                <span class="crop">Sugarcane</span>
+                                <span class="price">₹325/quintal</span>
+                                <span class="change positive">+0.8%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="market-card">
+                        <h3>Price Trends</h3>
+                        <div class="trend-chart">
+                            <canvas id="priceChart" width="400" height="200"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="market-card">
+                        <h3>Market Tips</h3>
+                        <div class="tips-list">
+                            <div class="tip-item">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Rice prices expected to rise next week due to reduced supply</span>
+                            </div>
+                            <div class="tip-item">
+                                <i class="fas fa-trending-up"></i>
+                                <span>Good time to sell wheat in Delhi market</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Support</h3>
+                    <p><i class="fas fa-phone"></i> Toll-free: 1800-123-4567</p>
+                    <p><i class="fas fa-envelope"></i> support@farmassist.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#weather">Weather</a></li>
+                        <li><a href="#recommendations">Recommendations</a></li>
+                        <li><a href="#policies">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Agricultural Helplines</h3>
+                    <p><i class="fas fa-phone"></i> Kisan Call Centre: 1551</p>
+                    <p><i class="fas fa-phone"></i> Weather Helpline: 1555</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FarmAssist. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
